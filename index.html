@@ -14,7 +14,7 @@
     -->
     <script>
   function populateSheet(result) {
-  for(var row=0; row<8; row++) {
+  for(var row=0; row<5; row++) {
     for(var col=0; col<2; col++) {
     document.getElementById(row+":"+col).value = result.values[row][col];
     }
@@ -105,7 +105,7 @@
     <?php
 
 
-    for($row = 0; $row < 8; $row++) {
+    for($row = 0; $row < 5; $row++) {
         echo "<div style='clear:both'>";
         for($col = 0; $col < 2; $col++) {
         echo "<input type='text' style='float:left;' name = '$row:$col' id='$row:$col'>";
