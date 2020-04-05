@@ -40,8 +40,8 @@
         var t = "";
         for (var i = 0; i < response.result.length; i++){
               var tr = "<tr>";
-              tr += "<td>"+response.result[i][0]+"</td>";
-              tr += "<td>"+response.result[i][1]+"</td>";
+              tr += "<td>"+response.result.values[i][0]+"</td>";
+              tr += "<td>"+response.result.values[i][1]+"</td>";
               tr += "</tr>";
               t += tr;
         }
