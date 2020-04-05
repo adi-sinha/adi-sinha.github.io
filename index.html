@@ -13,14 +13,7 @@
        https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
     -->
     <script>
-  function populateSheet(result) {
-  for(var row=0; row<5; row++) {
-    for(var col=0; col<2; col++) {
-    document.getElementById(row+":"+col).value = result.values[row][col];
-    }
-
-  }
-}
+  
     function makeApiCall() {
       var params = {
         // The ID of the spreadsheet to retrieve data from.
@@ -44,7 +37,15 @@
       request.then(function(response) {
         // TODO: Change code below to process the `response` object:
         console.log(response.result);
-        //populateSheet(response.result);
+        var t = "";
+        for (var i = 0; i < response.result.length; i++){
+              var tr = "<tr>";
+              tr += "<td>"+response.result[i][0]+"</td>";
+              tr += "<td>"+response.result[i][1]+"</td>";
+              tr += "</tr>";
+              t += tr;
+        }
+        document.getElementById("posts").innerHTML += t;
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
       });
@@ -101,18 +102,5 @@
     </script>
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
-    <div style="margin-left:auto; margin-right:auto; width:960px;">
-    <?php
-
-
-    for($row = 0; $row < 5; $row++) {
-        echo "<div style='clear:both'>";
-        for($col = 0; $col < 2; $col++) {
-        echo "<input type='text' style='float:left;' name = '$row:$col' id='$row:$col'>";
-        }
-        echo "</div>";
-    }
-    ?>
-    
 </body>
 </html>
