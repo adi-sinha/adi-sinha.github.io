@@ -13,6 +13,14 @@
        https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
     -->
     <script>
+  function populateSheet(result) {
+  for(var row=0; row<8; row++) {
+    for(var col=0; col<3; col++) {
+    document.getElementById(row+":"+col).value = result.values[row][col];
+    }
+
+  }
+}
     function makeApiCall() {
       var params = {
         // The ID of the spreadsheet to retrieve data from.
@@ -84,14 +92,7 @@
       gapi.auth2.getAuthInstance().signOut();
     }
     
-    function populateSheet(result) {
-  for(var row=0; row<8; row++) {
-    for(var col=0; col<3; col++) {
-    document.getElementById(row+":"+col).value = result.values[row][col];
-    }
 
-  }
-}
 
     </script>
     <script async defer src="https://apis.google.com/js/api.js"
@@ -102,6 +103,8 @@
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
     <div style="margin-left:auto; margin-right:auto; width:960px;">
         <?php
+
+
         for($row = 0; $row < 8; $row++) {
           echo "<div style='clear:both'>";
           for($col = 0; $col < 3; $col++) {
