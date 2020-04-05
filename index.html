@@ -45,7 +45,7 @@
               tr += "</tr>";
               t += tr;
         }
-        document.getElementById("posts").innerHTML += t;
+        document.getElementById("response.result").innerHTML += t;
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
       });
