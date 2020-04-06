@@ -14,7 +14,7 @@
     -->
     <script>
   
-    function makeApiCall() {
+    function makeApiCall(event) {
       var params = {
         // The ID of the spreadsheet to retrieve data from.
         spreadsheetId: '1DpLVuYJNA1fnSpqvh4wJrIxD5XI4WZmzTopRexwlxgg',  // TODO: Update placeholder value.
@@ -103,7 +103,7 @@
     </script>
 <!--     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button> -->
-    <div onload="this.onload=makeApiCall()"></div>
+    <div onload="makeApiCall()"></div>
     <table id="posts">
                 <tr>
                     <th id="test">Titre</th>
