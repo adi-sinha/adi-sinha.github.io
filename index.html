@@ -13,7 +13,14 @@
        https://developers.google.com/sheets/api/quickstart/js#step_2_set_up_the_sample
     -->
     <script>
-  
+  function populateSheet(result) {
+  for(var row=0; row<8; row++) {
+    for(var col=0; col<2; col++) {
+    document.getElementById(row+":"+col).value = result.values[row][col];
+    }
+
+  }
+}
     function makeApiCall() {
       var params = {
         // The ID of the spreadsheet to retrieve data from.
@@ -37,15 +44,7 @@
       request.then(function(response) {
         // TODO: Change code below to process the `response` object:
         console.log(response.result);
-        var t = "";
-        for (var i = 0; i < response.result.values.length; i++){
-              var tr = "<tr>";
-              tr += "<td>"+response.result.values[i][0]+"</td>";
-              tr += "<td>"+response.result.values[i][1]+"</td>";
-              tr += "</tr>";
-              t += tr;
-        }
-        document.getElementById("posts").innerHTML += t;
+        //populateSheet(response.result);
       }, function(reason) {
         console.error('error: ' + reason.result.error.message);
       });
@@ -86,7 +85,8 @@
     }
 
     function handleSignInClick(event) {
-      gapi.auth2.getAuthInstance().signIn();
+        makeApiCall();
+      //gapi.auth2.getAuthInstance().signIn();
     }
 
     function handleSignOutClick(event) {
@@ -102,19 +102,18 @@
     </script>
     <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
     <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
-    <table id="posts">
-                <tr>
-                    <th id="test">Titre</th>
-                    <th>Lien</th>
-                    <th>Date</th>
-                    <th>Image</th>
-                </tr>
-                <tr>
-                    <td id="title"></td>
-                    <td id="link"></td>
-                    <td id="date"></td>
-                    <td id="image"></td>
-                </tr>
-            </table>
+    <div style="margin-left:auto; margin-right:auto; width:960px;">
+    <?php
+
+
+    for($row = 0; $row < 8; $row++) {
+        echo "<div style='clear:both'>";
+        for($col = 0; $col < 2; $col++) {
+        echo "<input type='text' style='float:left;' name = '$row:$col' id='$row:$col'>";
+        }
+        echo "</div>";
+    }
+    ?>
+    
 </body>
 </html>
