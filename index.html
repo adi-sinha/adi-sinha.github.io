@@ -85,14 +85,13 @@
       }
     }
 
-    function handleSignInClick(event) {
-      makeApiCall();
-//      gapi.auth2.getAuthInstance().signIn();
-    }
+    // function handleSignInClick(event) {
+    //   gapi.auth2.getAuthInstance().signIn();
+    // }
 
-    function handleSignOutClick(event) {
-      gapi.auth2.getAuthInstance().signOut();
-    }
+    // function handleSignOutClick(event) {
+    //   gapi.auth2.getAuthInstance().signOut();
+    // }
     
 
 
@@ -101,8 +100,9 @@
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-    <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
-    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button>
+    <element onload="makeApiCall()"></element>
+    <!-- <button id="signin-button" onclick="handleSignInClick()">Sign in</button>
+    <button id="signout-button" onclick="handleSignOutClick()">Sign out</button> -->
     <table id="posts">
                 <tr>
                     <th id="test">Titre</th>
