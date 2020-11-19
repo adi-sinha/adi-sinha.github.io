@@ -1,81 +1,50 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var url = require('url');
-var rooms = [];
+const http = require('http')
+const express = require('express')
+const socketio = require('socket.io')
 
-app.get('/',function(req,res){
-res.sendFile(__dirname + "/masterV2.html");
+const app = express();
+const server = http.Server(app);
+const io = socketio(server);
+
+const title = 'Buffer Buzzer'
+
+let data = {
+  users: new Set(),
+  buzzes: new Set(),
+}
+
+const getData = () => ({
+  users: [...data.users],
+  buzzes: [...data.buzzes].map(b => {
+    const [ name, team ] = b.split('-')
+    return { name, team }
+  })
 })
 
+app.use(express.static('public'))
+app.set('view engine', 'pug')
 
+app.get('/', (req, res) => res.render('index', { title }))
+app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
 
-
-
-io.on('connection',function(socket){
-
-  socket.on('clear room', function(msg){
-    for (var i = 0; i < rooms.length; i++){
-      if (rooms[i] == msg){
-        delete rooms[i];
-        console.log ('deleted ' + msg)
-      }
-    }
-  });
-
-  socket.on('create room', function(msg){
-    var success = true;
-    for (var i = 0; i < rooms.length; i++){
-      if (rooms[i] == msg){
-        success = false;
-      }
-    }
-    if (success){
-      socket.emit('duplicate check', 'no duplicates');
-      console.log(msg + " is a channel");
-      rooms.push(msg);
-    }
-    else{
-      socket.emit('duplicate check', 'duplicate');
-    }
-  });
-
-  socket.on('join room', function(msg){
-    var message = "doesn't exist";
-    for (var i = 0; i < rooms.length; i++){
-      if(rooms[i] == msg){
-
-        message = "active room"
-
-      }
-    }
-    io.emit('join response', message);
-
-  });
-
-
-   socket.on('buzz', function(msg){
-
-    io.emit('playerInfo',[msg[0], msg[1]]);
-
-   });
-
-  socket.on('resetReq',function(msg){
-
-    io.emit('reset',[msg[0], msg[1]]);
-
+io.on('connection', (socket) => {
+  socket.on('join', (user) => {
+    data.users.add(user.id)
+    io.emit('active', [...data.users].length)
+    console.log(`${user.name} joined!`)
   })
 
+  socket.on('buzz', (user) => {
+    data.buzzes.add(`${user.name}-${user.team}`)
+    io.emit('buzzes', [...data.buzzes])
+    console.log(`${user.name} buzzed in!`)
+  })
 
-
-
-
-});
-
-
-
-http.listen(5000,function(){
-
-console.log("listening on port 5000");
-
+  socket.on('clear', () => {
+    data.buzzes = new Set()
+    io.emit('buzzes', [...data.buzzes])
+    console.log(`Clear buzzes`)
+  })
 })
+
+server.listen(8090, () => console.log('Listening on 8090'))

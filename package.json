@@ -1,0 +1,20 @@
+{
+  "name": "buzzer",
+  "version": "1.2.0",
+  "description": "",
+  "main": "index.js",
+  "homepage": "https://adi-sinha.github.io/",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "author": "Dan Farrelly <daniel.j.farrelly@gmail.com> (http://danfarrelly.nyc)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.1",
+    "jade": "^1.11.0",
+    "pug": "^2.0.4",
+    "socketio": "1.0.0"
+  }
+}
